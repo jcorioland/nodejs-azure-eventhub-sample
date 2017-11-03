@@ -34,8 +34,8 @@ var server = http.createServer(function(request, response) {
             'Content-Type': 'application/json;charset=utf-8',
             'Authorization': authorization,
             'Origin': '*',
-            'Access-Control-Allow-Credentials': true/*,
-            'Connection': 'Keep-Alive'*/
+            'Access-Control-Allow-Credentials': true,
+            'Connection': 'Keep-Alive'
         }
     };
 
