@@ -39,31 +39,22 @@ var server = http.createServer(function(request, response) {
         }
     };
 
-    requestCount += 1;
-
     var postToEventHub = https.request(postOptions, function(eventHubResponse) {
         if(eventHubResponse.statusCode === 201){
             successCount += 1;
         }
-        else{
-            errorCount += 1;
-        }
-
-        // eventHubResponse.on('data', function(){/* nothing */})
-
-        lastStatusMessage = eventHubResponse.statusMessage;
     });
 
-    postToEventHub.on('error', function(requestError) {
+    postToEventHub.on('error', function(e) {
         errorCount += 1;
     });
 
     postToEventHub.write(content);
     postToEventHub.end();
 
+    requestCount += 1;
     response.writeHead(200, {"Content-Type": "text/plain"});
-    response.end("Requests sent to event hub: " + requestCount + ", Success count: " + successCount + ", Errors count: " + errorCount + ", Last status: " + lastStatusMessage);
-
+    response.end("Requests sent to event hub: " + requestCount + ", Success count: " + successCount + ", Errors count: " + errorCount);
 });
 
 var port = process.env.PORT || 8080;
