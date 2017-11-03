@@ -40,8 +40,12 @@ var server = http.createServer(function(request, response) {
     };
 
     var postToEventHub = https.request(postOptions, function(eventHubResponse) {
+        requestCount += 1;
         if(eventHubResponse.statusCode === 201){
             successCount += 1;
+        }
+        else {
+            errorCount += 1;
         }
     });
 
@@ -52,7 +56,6 @@ var server = http.createServer(function(request, response) {
     postToEventHub.write(content);
     postToEventHub.end();
 
-    requestCount += 1;
     response.writeHead(200, {"Content-Type": "text/plain"});
     response.end("Requests sent to event hub: " + requestCount + ", Success count: " + successCount + ", Errors count: " + errorCount);
 });
