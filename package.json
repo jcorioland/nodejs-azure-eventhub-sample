@@ -1,0 +1,22 @@
+{
+  "name": "nodejs-azure-eventhub-sample",
+  "version": "1.0.0",
+  "description": "Node.js sample code that sends messages to Azure Event Hub using https",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jcorioland/nodejs-azure-eventhub-sample.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jcorioland/nodejs-azure-eventhub-sample/issues"
+  },
+  "homepage": "https://github.com/jcorioland/nodejs-azure-eventhub-sample#readme",
+  "dependencies": {
+    "http": "0.0.0"
+  }
+}
