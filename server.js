@@ -34,8 +34,8 @@ var server = http.createServer(function(request, response) {
             'Content-Type': 'application/json;charset=utf-8',
             'Authorization': authorization,
             'Origin': '*',
-            'Access-Control-Allow-Credentials': true,
-            'Connection': 'Keep-Alive'
+            'Access-Control-Allow-Credentials': true/*,
+            'Connection': 'Keep-Alive'*/
         }
     };
 
@@ -49,10 +49,9 @@ var server = http.createServer(function(request, response) {
             errorCount += 1;
         }
 
-        eventHubResponse.on('data', function(){/* nothing */})
+        // eventHubResponse.on('data', function(){/* nothing */})
 
         lastStatusMessage = eventHubResponse.statusMessage;
-        console.log(lastStatusMessage);
     });
 
     requestToEventHub.on('error', function(requestError) {
