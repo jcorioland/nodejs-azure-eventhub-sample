@@ -47,10 +47,13 @@ var server = http.createServer(function(request, response) {
         else {
             errorCount += 1;
         }
+
+        lastStatusMessage = eventHubResponse.statusMessage;
     });
 
     postToEventHub.on('error', function(e) {
         errorCount += 1;
+        lastStatusMessage = JSON.stringify(e);
     });
 
     postToEventHub.write(content);
