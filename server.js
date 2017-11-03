@@ -60,7 +60,7 @@ var server = http.createServer(function(request, response) {
     postToEventHub.end();
 
     response.writeHead(200, {"Content-Type": "text/plain"});
-    response.end("Requests sent to event hub: " + requestCount + ", Success count: " + successCount + ", Errors count: " + errorCount);
+    response.end("Requests sent to event hub: " + requestCount + ", Success count: " + successCount + ", Errors count: " + errorCount + ", Status: " + lastStatusMessage);
 });
 
 var port = process.env.PORT || 8080;
