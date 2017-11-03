@@ -24,7 +24,7 @@ var server = http.createServer(function(request, response) {
     var content = JSON.stringify({ timestamp: Date.now().timestamp, "message": "Hello Event Hub" }); 
     var contentLenght = content.length;
     
-    var options = {
+    var postOptions = {
         host: eventHubHost,
         path: requestPath,
         port: 443,
@@ -41,7 +41,7 @@ var server = http.createServer(function(request, response) {
 
     requestCount += 1;
 
-    var requestToEventHub = https.request(options, function(eventHubResponse) {
+    var postToEventHub = https.request(postOptions, function(eventHubResponse) {
         if(eventHubResponse.statusCode === 201){
             successCount += 1;
         }
@@ -54,12 +54,12 @@ var server = http.createServer(function(request, response) {
         lastStatusMessage = eventHubResponse.statusMessage;
     });
 
-    requestToEventHub.on('error', function(requestError) {
+    postToEventHub.on('error', function(requestError) {
         errorCount += 1;
     });
 
-    requestToEventHub.write(content);
-    requestToEventHub.end();
+    postToEventHub.write(content);
+    postToEventHub.end();
 
     response.writeHead(200, {"Content-Type": "text/plain"});
     response.end("Requests sent to event hub: " + requestCount + ", Success count: " + successCount + ", Errors count: " + errorCount + ", Last status: " + lastStatusMessage);
