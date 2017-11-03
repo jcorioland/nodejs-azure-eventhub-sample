@@ -1,5 +1,6 @@
 var http = require('http');
 var https = require('https');
+const HttpsAgent = require('agentkeepalive').HttpsAgent;
 var eventhub = require('./eventhub');
 
 var requestCount = 0;
@@ -19,6 +20,13 @@ const requestPath = "/" + eventHubName + "/messages";
 const authorization = eventhub.createSharedAccessToken(eventHubHost, eventHubAccessKeyName, eventHubAccessKeyValue);
 var lastStatusMessage = "";
 
+const keepaliveAgent = new HttpsAgent({
+    maxSockets: 160,
+    maxFreeSockets: 10,
+    timeout: 6000,
+    freeSocketKeepAliveTimeout: 30000,
+});
+
 var server = http.createServer(function(request, response) {
 
     var content = JSON.stringify({ timestamp: Date.now().timestamp, "message": "Hello Event Hub" }); 
@@ -34,9 +42,9 @@ var server = http.createServer(function(request, response) {
             'Content-Type': 'application/json;charset=utf-8',
             'Authorization': authorization,
             'Origin': '*',
-            'Access-Control-Allow-Credentials': true,
-            'Connection': 'Keep-Alive'
-        }
+            'Access-Control-Allow-Credentials': true
+        },
+        agent: keepaliveAgent
     };
 
     var postToEventHub = https.request(postOptions, function(eventHubResponse) {
