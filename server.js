@@ -55,6 +55,7 @@ var server = http.createServer(function(request, response) {
             errorCount += 1;
         }
 
+        eventHubResponse.on('data', function() { /* do nothing */ });
         lastStatusMessage = eventHubResponse.statusMessage;
     });
 
